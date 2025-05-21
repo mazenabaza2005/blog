@@ -1,1 +1,6 @@
 Django>=4.2.0 
+add react buttons show number of comments and likes and date of creation
+add a profile page with the posts history and comments and some info about the user
+add saved posts page in profile
+add a filter to filter the posts by blablablabla (by tags recommended topics)
+add a search bar to search for posts
