@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Blogs List{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <a href="{% url 'site:posts:create' %}" class="btn btn-primary mb-4">+ Create Post</a>
+
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4" >
+                {% include 'partials/post.html' %}
+            </div>
+        {% empty %}
+            <p>No Posts available</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

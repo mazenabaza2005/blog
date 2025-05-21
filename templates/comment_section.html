@@ -1,0 +1,60 @@
+<div class="mt-4">
+    <h5>Leave a Comment</h5>
+    <form id="comment-form" action="{% url 'site:posts:comments:rate' post.slug %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button class="btn btn-primary">Post Comment</button>
+    </form>
+
+    <hr>
+    {{ edit_form }}
+    <h5>Comments</h5>
+    <div id="comments">    
+        <div id="comments-list">
+            {% if comments %}
+                {% for comment in comments %}
+                    {% include 'comment.html' %}
+                {% endfor %}
+            {% else %}
+                <p id="no-comments-message">No Comments yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById('comment-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const url = form.action;
+    const formData = new FormData(form)
+
+    fetch(url, {
+        method: 'POST',
+        'headers': {
+        'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: formData
+    }).then(response => response.json())
+        .then(data => {
+        if (data.success) {
+            // Remove the "No Comments" message if it exists
+            const noCommentsMessage = document.getElementById('no-comments-message');
+            if (noCommentsMessage) {
+                noCommentsMessage.remove();
+            }
+            
+            // Add the new comment to the container
+            const commentsList = document.getElementById('comments-list');
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data.comment_html;
+            commentsList.prepend(tempDiv.firstChild);
+            form.reset()
+        } else {
+            alert ('Error: ' + JSON.stringify(data.errors))
+        }
+        });
+    });
+</script>

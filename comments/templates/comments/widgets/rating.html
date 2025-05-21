@@ -1,0 +1,32 @@
+<style>
+.rating-stars {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 5px;
+}
+
+.rating-stars input[type="radio"] {
+  display: none;
+}
+
+.rating-stars label {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.rating-stars input[type="radio"]:checked ~ label,
+.rating-stars label:hover,
+.rating-stars label:hover ~ label {
+  color: #f5c518; /* gold-like color */
+}
+</style>
+
+<div class="rating-stars">
+  {% for choice in choices reversed %}
+    <input type="radio" name="{{ widget.name }}" value="{{ choice }}" id="star{{ choice }}" {% if choice == value %}checked{% endif %}>
+    <label for="star{{ choice }}">&#9733;</label>  <!-- ★ star symbol -->
+  {% endfor %}
+</div>

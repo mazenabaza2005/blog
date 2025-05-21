@@ -1,0 +1,18 @@
+<div class="mb-3">
+    <strong>{{ comment.user.username }}</strong>
+    <small class="text-muted">{{ comment.created_at|date:"Y-m-d H:i" }}</small>
+    <div>
+        <strong>Rating: {{ comment.rating }}</strong>
+    </div>
+    <p>{{ comment.content }}</p>
+    
+    {% if request.user == comment.user or request.user == comment.post.user %}
+        <form method="post" action="{% url 'comments:delete_comment' comment.id %}" class="delete-comment-form">
+            {% csrf_token %}
+            
+            <button type="submit" class="btn btn-danger delete-comment" data-id="{{ comment.id }}">Delete</button>
+
+        </form>
+    {% endif %}
+</div>
+
