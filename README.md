@@ -1,0 +1,1 @@
+its a Django-based blogging platform that allows users to register, log in, and publish rich-text articles. It features clean slug-based URLs, post creation and editing, and a simple homepage that lists published posts. The project uses Django’s authentication system and integrates DRF
